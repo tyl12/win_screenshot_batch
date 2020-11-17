@@ -1,0 +1,12 @@
+open 192.168.10.101
+ftpuser
+12345qwert
+prompt off
+lcd C:\Users\Administrator\WinSys\ftp\cfg
+binary
+mput *.png
+mput *.jpg
+mput *.dat
+prompt on
+bye
+quit
