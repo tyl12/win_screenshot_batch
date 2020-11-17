@@ -25,7 +25,8 @@ set fileprefix=~%mmdd%_%hhmiss%
 echo "Next image: %fileprefix%.jpg"
 
 REM C:\Users\Administrator\WinSys\ftp\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot C:\Users\Administrator\WinSys\ftp\cfg\scr~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.png
-%binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot "%fileprefix%.jpg"
+start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot "%fileprefix%.jpg"
+ping -n 2 -w 1000 127.0.0.1 >nul
 ren *.jpg *.dat
 
 set cnt=0
