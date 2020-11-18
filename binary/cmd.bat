@@ -19,13 +19,15 @@ echo "wait..."
 REM timeout /T 10 /NOBREAK
 ping -n 10 -w 1000 127.0.0.1 >nul
 
-set mmdd=%date:~5,2%%date:~8,2%
-set hhmiss=%time:~0,2%%time:~3,2%%time:~6,2%
-set fileprefix=~%mmdd%_%hhmiss%
-echo "Next image: %fileprefix%.jpg"
-
 REM C:\Users\Administrator\WinSys\ftp\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot C:\Users\Administrator\WinSys\ftp\cfg\scr~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.png
-start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot "%fileprefix%.jpg"
+start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot  "scr~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.jpg"
+
+REM set mmdd=%date:~5,2%%date:~8,2%
+REM set hhmiss=%time:~0,2%%time:~3,2%%time:~6,2%
+REM set fileprefix=~%mmdd%_%hhmiss%
+REM echo "Next image: %fileprefix%.jpg"
+REM start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot "%fileprefix%.jpg"
+
 ping -n 2 -w 1000 127.0.0.1 >nul
 ren *.jpg *.dat
 
