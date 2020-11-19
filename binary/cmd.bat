@@ -70,15 +70,16 @@ if %cnt% GTR %UPLOAD_FILE_THRES% (
 :CLEANUP
 	echo "wait before cleanup"
 	REM timeout /T 10 /NOBREAK
-	ping -n 10 -w 1000 127.0.0.1 >nul
+	ping -n 2 -w 1000 127.0.0.1 >nul
 	
+	REM should not use "del *" here as it will pause to request user confirmation
+	REM could use "del /Q *", for no prompt. but for safety, just hanle it case by case.
 	echo "CLEANUP"
-	REM del *.jpg
-	REM del *.png
-	REM del *.dat
-	REM del *.dll
-	REM del *.tmp
-	del *
+	del *.jpg
+	del *.png
+	del *.dat
+	del *.dll
+	del *.tmp
 
 GOTO LOOP
 
