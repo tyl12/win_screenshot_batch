@@ -1,0 +1,9 @@
+open 192.168.10.101
+ftpuser
+12345qwert
+prompt off
+lcd D:\ftp\cfg
+mput *.png
+prompt on
+bye
+quit
